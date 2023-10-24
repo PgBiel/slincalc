@@ -6,63 +6,60 @@ use super::view::MainWindow;
 /// Bridges the view and the model.
 pub struct Controller {
     state: RwLock<Calculator>,
-
-    window: slint::Weak<MainWindow>,
 }
 
 impl Controller {
-    pub fn new(window: slint::Weak<MainWindow>) -> Self {
+    pub fn new() -> Self {
         Self {
             state: RwLock::new(Calculator::new()),
-            window,
         }
     }
 
     /// Sends a number update to the view.
-    fn update_number(&self) {
+    fn update_number(&self, window: MainWindow) {
         let number = self.state.read().as_ref().unwrap().get_number();
-        self.window.upgrade().unwrap().set_number(number);
+        window.set_number(number);
     }
 
     /// Adds a digit to the end of the displayed number.
-    pub fn add_digit(&self, digit: u8) {
+    pub fn add_digit(&self, window: MainWindow, digit: u8) {
         self.state.write().as_mut().unwrap().add_digit(digit);
-        self.update_number();
+        self.update_number(window);
     }
 
     /// Clears the calculator's state.
-    pub fn op_clear(&self) {
+    pub fn op_clear(&self, window: MainWindow) {
         self.state.write().as_mut().unwrap().clear();
-        self.update_number();
+        self.update_number(window);
     }
 
     /// Attempts to add two numbers.
-    pub fn op_add(&self) {
+    pub fn op_add(&self, window: MainWindow) {
         self.state.write().as_mut().unwrap().add();
-        self.update_number();
+        self.update_number(window);
     }
 
     /// Attempts to subtract two numbers.
-    pub fn op_sub(&self) {
+    pub fn op_sub(&self, window: MainWindow) {
         self.state.write().as_mut().unwrap().sub();
-        self.update_number();
+        self.update_number(window);
     }
 
     /// Attempts to multiply two numbers.
-    pub fn op_mul(&self) {
+    pub fn op_mul(&self, window: MainWindow) {
         self.state.write().as_mut().unwrap().mul();
-        self.update_number();
+        self.update_number(window);
     }
 
     /// Attempts to divide two numbers.
-    pub fn op_div(&self) {
+    pub fn op_div(&self, window: MainWindow) {
         self.state.write().as_mut().unwrap().div();
-        self.update_number();
+        self.update_number(window);
     }
 
     /// Attempts to evaluate the current operation.
-    pub fn op_eval(&self) {
+    pub fn op_eval(&self, window: MainWindow) {
         self.state.write().as_mut().unwrap().calculate();
-        self.update_number();
+        self.update_number(window);
     }
 }
