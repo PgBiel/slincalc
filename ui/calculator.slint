@@ -1,0 +1,133 @@
+import { VerticalBox , LineEdit, Button } from "std-widgets.slint";
+
+export component MainWindow inherits Window {
+    width: 300pt;
+    height: 400pt;
+    title: "Calculator";
+    in-out property <int> number;
+
+    callback add_digit(int);
+    callback op_add <=> btn_add.clicked;
+    callback op_sub <=> btn_sub.clicked;
+    callback op_mul <=> btn_mul.clicked;
+    callback op_div <=> btn_div.clicked;
+    callback op_eval <=> btn_eq.clicked;
+    callback op_clear <=> btn_clear.clicked;
+
+    VerticalBox {
+        Rectangle {
+            height: 2.5rem;
+            background: gray;
+            Text {
+                horizontal-alignment: right;
+                width: 98%;
+                text: "\{number}";
+            }
+        }
+        GridLayout {
+            spacing: 5pt;
+            Row {
+                btn_1 := Button {
+                    width: 25%;
+                    text: "1";
+                    clicked => {
+                        add-digit(1);
+                    }
+                }
+                btn_2 := Button {
+                    width: 25%;
+                    text: "2";
+                    clicked => {
+                        add-digit(2);
+                    }
+                }
+                btn_3 := Button {
+                    width: 25%;
+                    text: "3";
+                    clicked => {
+                        add-digit(3);
+                    }
+                }
+                btn_add := Button {
+                    width: 25%;
+                    text: "+";
+                }
+            }
+            Row {
+                btn_4 := Button {
+                    width: 25%;
+                    text: "4";
+                    clicked => {
+                        add-digit(4);
+                    }
+                }
+                btn_5 := Button {
+                    width: 25%;
+                    text: "5";
+                    clicked => {
+                        add-digit(5);
+                    }
+                }
+                btn_6 := Button {
+                    width: 25%;
+                    text: "6";
+                    clicked => {
+                        add-digit(6);
+                    }
+                }
+                btn_sub := Button {
+                    width: 25%;
+                    text: "-";
+                }
+            }
+            Row {
+                btn_7 := Button {
+                    width: 25%;
+                    text: "7";
+                    clicked => {
+                        add-digit(7);
+                    }
+                }
+                btn_8 := Button {
+                    width: 25%;
+                    text: "8";
+                    clicked => {
+                        add-digit(8);
+                    }
+                }
+                btn_9 := Button {
+                    width: 25%;
+                    text: "9";
+                    clicked => {
+                        add-digit(9);
+                    }
+                }
+                btn_mul := Button {
+                    width: 25%;
+                    text: "x";
+                }
+            }
+            Row {
+                btn_clear := Button {
+                    width: 25%;
+                    text: "Clear";
+                }
+                btn_0 := Button {
+                    width: 25%;
+                    text: "0";
+                    clicked => {
+                        add-digit(0);
+                    }
+                }
+                btn_eq := Button {
+                    width: 25%;
+                    text: "=";
+                }
+                btn_div := Button {
+                    width: 25%;
+                    text: "/";
+                }
+            }
+        }
+    }
+}
