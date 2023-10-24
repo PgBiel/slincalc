@@ -1,4 +1,4 @@
-use std::sync::RwLock;
+use std::sync::{Arc, RwLock};
 
 use super::model::Calculator;
 use super::view::MainWindow;
@@ -13,6 +13,17 @@ impl Controller {
         Self {
             state: RwLock::new(Calculator::new()),
         }
+    }
+
+    /// Registers a callback with cloned controller and window references.
+    pub fn register_callback(
+        self: &Arc<Self>,
+        window: &MainWindow,
+        callback: impl FnOnce(Arc<Self>, slint::Weak<MainWindow>),
+    ) {
+        let controller = Arc::clone(self);
+        let window = <MainWindow as slint::ComponentHandle>::as_weak(window);
+        callback(controller, window);
     }
 
     /// Sends a number update to the view.
