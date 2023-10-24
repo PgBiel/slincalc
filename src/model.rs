@@ -50,7 +50,7 @@ impl Calculator {
     /// If possible, applies the selected operation between the two numbers.
     pub fn calculate(&mut self) {
         if let Some(op) = self.op.take() {
-            self.number = Some(op.calculate(self.number.unwrap_or(0)));
+            self.number = Some(op.calculate(self.number.unwrap_or_else(|| op.held_number())));
         }
     }
 
