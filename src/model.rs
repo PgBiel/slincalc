@@ -47,7 +47,7 @@ impl Calculator {
         *self = Self::default();
     }
 
-    /// If possible, applies the select operation between the two numbers.
+    /// If possible, applies the selected operation between the two numbers.
     pub fn calculate(&mut self) {
         if let Some(op) = self.op.take() {
             self.number = Some(op.calculate(self.number.unwrap_or(0)));
