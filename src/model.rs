@@ -3,12 +3,15 @@ pub struct Calculator {
     /// 'number: None' means we just made an operation with the previous number.
     /// The previous number would then be held in 'op'.
     number: Option<i32>,
-    op: Option<Operation>
+    op: Option<Operation>,
 }
 
 impl Default for Calculator {
     fn default() -> Self {
-        Self { number: Some(0), op: None }
+        Self {
+            number: Some(0),
+            op: None,
+        }
     }
 }
 
@@ -23,13 +26,19 @@ impl Calculator {
     /// However, after using an operation, this will correspond
     /// to the _previous_ number, stored in the operation object itself.
     pub fn get_number(&self) -> i32 {
-        self.number.unwrap_or_else(|| self.op.unwrap().held_number())
+        self.number
+            .unwrap_or_else(|| self.op.unwrap().held_number())
     }
 
     /// Adds a digit to the currently displayed number.
     pub fn add_digit(&mut self, digit: u8) {
         assert!(digit < 10);
-        self.number = Some(self.number.unwrap_or(0).saturating_mul(10).saturating_add(digit as i32));
+        self.number = Some(
+            self.number
+                .unwrap_or(0)
+                .saturating_mul(10)
+                .saturating_add(digit as i32),
+        );
     }
 
     /// Clears the calculator's current state, setting its number to zero
@@ -80,7 +89,7 @@ pub enum Operation {
     Add(i32),
     Sub(i32),
     Mul(i32),
-    Div(i32)
+    Div(i32),
 }
 
 impl Operation {
@@ -90,7 +99,7 @@ impl Operation {
             Operation::Add(number1) => number1.saturating_add(number2),
             Operation::Sub(number1) => number1.saturating_sub(number2),
             Operation::Mul(number1) => number1.saturating_mul(number2),
-            Operation::Div(_) if number2 == 0 => 0,  // quick workaround for div by 0
+            Operation::Div(_) if number2 == 0 => 0, // quick workaround for div by 0
             Operation::Div(number1) => number1.saturating_div(number2),
         }
     }

@@ -1,6 +1,6 @@
+mod controller;
 mod model;
 mod view;
-mod controller;
 
 use std::sync::Arc;
 

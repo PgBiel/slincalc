@@ -7,14 +7,14 @@ use super::view::MainWindow;
 pub struct Controller {
     state: RwLock<Calculator>,
 
-    window: slint::Weak<MainWindow>
+    window: slint::Weak<MainWindow>,
 }
 
 impl Controller {
     pub fn new(window: slint::Weak<MainWindow>) -> Self {
         Self {
             state: RwLock::new(Calculator::new()),
-            window
+            window,
         }
     }
 
